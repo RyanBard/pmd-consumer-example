@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>pmd-consumer-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>pmd consumer example</name>
+    <description>An example project that uses the PMD plugin</description>
+
+    <profiles>
+
+        <profile>
+            <id>jdk7</id>
+            <activation>
+                <jdk>1.7</jdk>
+            </activation>
+            <properties>
+                <jdk.version>1.7</jdk.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jdk.version>1.8</jdk.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>jdk9</id>
+            <activation>
+                <jdk>9.0</jdk>
+            </activation>
+            <properties>
+                <jdk.version>1.9</jdk.version>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.8</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/rulesets/java/braces.xml</ruleset>
+                    </rulesets>
+                    <targetJdk>${jdk.version}</targetJdk>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
